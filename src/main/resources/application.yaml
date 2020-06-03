@@ -1,0 +1,31 @@
+spring:
+  cloud:
+    function:
+      definition: supplier;accumulate;alertLog;write
+
+    stream:
+      kafka:
+        binder:
+          brokers:
+          - 172.18.22.21:9092
+          - 172.18.22.21:9093
+
+      bindings:
+        supplier-out-0:
+          destination: variation-margin
+          group: vm
+
+        accumulate-in-0:
+          destination: variation-margin
+          group: accumulate-vm
+        accumulate-out-0:
+          destination: variation-margin-accumulate
+          group: accumulate-vm
+
+        alertLog-in-0:
+          destination: variation-margin-accumulate
+          group: accumulate-vm
+
+        write-in-0:
+          destination: variation-margin
+          group: write-vm
